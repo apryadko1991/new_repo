@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>lesson6-1</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            width: 1200px;
+            min-height: 1300px;
+            margin: 0 auto;
+        }
+
+        .catalogue {
+            
+            position: relative;
+            width: 1000px;
+            display: flex;
+            justify-content: space-between;
+            flex-flow: wrap;
+            margin: 50px auto;
+        }
+
+        .item {
+            height: 300px;
+            width: 250px;
+            margin: 20px 20px;
+            background-size: contain;
+            position: relative;
+        }
+
+        .item img {
+            height: 250px;
+            width: 250px;
+        }
+
+        .button {
+            height: 50px;
+            width: 100%;
+            background-color: seagreen;
+            text-align: center;
+            line-height: 50px;
+            font-size: 30px;
+            color: beige;
+        }
+
+        .button:hover {
+            background-color: salmon;
+        }
+
+        .cart {
+            width: 960px;
+            margin: 0 auto;
+            padding: 20px 20px 20px;
+            display: flex;
+            flex-flow: wrap;
+            justify-content: flex-end;
+        }
+
+        .container h2 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .cart-item {
+            display: flex;
+            min-height: 20px;
+            width: 100%;
+            background-color: #eee;
+            margin-bottom: 20px;
+            padding: 15px;
+        }
+
+        .cart-item-img {
+            width: 100px;
+            height: 100px;
+
+        }
+
+        .cart-item-about {
+            margin-left: 20px;
+            height: 60px;
+            font-size: 20px;
+        }
+
+        .cart-item-clear {
+            font-size: 20px;
+            height: 30px;
+            margin: 35px 0px 35px auto;
+        }
+
+        .cart-clear {
+            float: left;
+            font-size: 20px;
+            padding: 5px 20px;
+            background-color: white;
+
+        }
+
+        .total {
+            font-size: 2em;
+            text-align: right;
+            font-weight: 500;
+            line-height: 50px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container" id='container'>
+        <div class="catalogue" id="catalogue">
+            <div class="item" id="item1">  
+                <img class="img" src="img/img.jpg" alt="Товар каталога">
+                <div class="button" id="item1">Купить</div>
+            </div>
+            <div class="item" id="item2">
+                <img class="img" src="img/img.jpg" alt="Товар каталога">
+                <div class="button" id="item2">Купить</div>
+            </div>
+            <div class="item" id="item3">
+                <img class="img" src="img/img.jpg" alt="Товар каталога">
+                <div class="button" id="item3">Купить</div>
+            </div>
+            <div class="item" id="item4">
+                <img class="img" src="img/img.jpg" alt="Товар каталога">
+                <div class="button" id="item4">Купить</div>
+            </div>
+            <div class="item" id="item5">
+                <img class="img" src="img/img.jpg" alt="Товар каталога">
+                <div class="button" id="item5">Купить</div>
+            </div>
+            <div class="item" id="item6">
+                <img class="img" src="img/img.jpg" alt="Товар каталога">
+                <div class="button" id="item6">Купить</div>
+            </div>
+        </div>
+        <h2>Корзина</h2>
+        <div class="cart" id="cart">
+
+        </div>
+    </div>
+    
+
+    <script>
+        var catalogue = [{
+                name: 'Трусы',
+                price: 300,
+                count: 1,
+                src: 'img/img1.jpg',
+            },
+            {
+                name: 'Футболка',
+                price: 1000,
+                count: 1,
+                src: 'img/img1.jpg',
+            },
+            {
+                name: 'Носки',
+                price: 50,
+                count: 1,
+                src: 'img/img1.jpg',
+            },
+            {
+                name: 'Брюки',
+                price: 1500,
+                count: 1,
+                src: 'img/img1.jpg',
+            },
+            {
+                name: 'Костюм',
+                price: 2000,
+                count: 1,
+                src: 'img/img1.jpg',
+            },
+            {
+                name: 'Туфли',
+                price: 1200,
+                count: 1,
+                src: 'img/img1.jpg',
+            }
+        ];
+        var cart = [];
+        var $cart = document.getElementById('cart');
+        var $catalogue = document.getElementById('catalogue');
+        var $container = document.getElementById('container');
+        var itemNum = '';
+        var totalCart = 0;
+
+        $catalogue.addEventListener('click', handleAddClick);
+        $cart.addEventListener('click', handleRemoveClick);
+
+        function handleAddClick(event) {
+            if (event.target.className === 'button') {
+                var itemId = event.target.id;
+                var catChildren = $catalogue.children;
+
+                for (var i = 0; i < $catalogue.children.length; i++) {
+                    if (itemId == catChildren[i].id) {
+                        itemNum = i;
+                    }
+                }
+                var repeatItem = false;
+                for (j = 0; j <= cart.length; j++) {
+                    if (cart[j] == catalogue[itemNum]) {
+                        cart[j].count = cart[j].count + 1;
+                        repeatItem = true;
+                    }
+                }
+                if (!repeatItem) cart.push(catalogue[itemNum]);
+                buildCart(cart);
+                getTotalCart(cart);
+            }
+        }
+        getTotalCart(cart);
+
+        function handleRemoveClick(event) {
+            if (event.target.className === 'cart-clear') {
+                cart = [];
+                buildCart(cart);
+                getTotalCart(cart);
+                catalogCountsClear();
+            }
+            if (event.target.className === 'cart-item-clear') {
+                for (i = 0; i < cart.length; i++) {
+                    if (event.target.id == 'cart-item-clear' + i) {
+                        cart[i].count = 1;
+                        cart.splice(i, 1);
+                    }
+                }
+                buildCart(cart);
+                getTotalCart(cart);
+            }
+        }
+
+        function catalogCountsClear() {
+            for (i = 0; i < catalogue.length; i++) catalogue[i].count = 1;
+        }
+
+
+        function getTotalCart(cart) {
+            totalCart = 0;
+            if (cart.length == 0) {
+                createElement('cart', 'div', 'total', 'total', '', 'Корзина пуста.');
+            } else {
+                for (i = 0; i < cart.length; i++) {
+                    totalCart += cart[i].price * cart[i].count;
+                }
+
+                createElement('cart', 'div', 'total', 'total', '', 'Сумма товара: ' + totalCart);
+                createElement('total', 'button', 'cart-clear', '', '', 'Очистить корзину');
+            }
+        }
+
+        function buildCart(cart) {
+            $cart.innerHTML = '';
+
+            for (var i = 0; i < cart.length; i++) {
+                createElement('cart', 'div', 'cart-item', 'cart-item' + i, '', '');
+                createElement('cart-item' + i, 'img', 'cart-item-img', '', cart[i].src, '');
+                createElement('cart-item' + i, 'div', 'cart-item-about', '', '', 'Наименование товара: ' + cart[i].name + '<br>Цена товара: ' + cart[i].price + '<br>Количество: ' + cart[i].count);
+                createElement('cart-item' + i, 'button', 'cart-item-clear', 'cart-item-clear' + i, '', 'Удалить');
+            }
+        }
+
+        function createElement(parentID, type, elemClass, elemId, src, content) {
+            var $parent = document.getElementById(parentID);
+            var $putIn = document.createElement(type);
+            $putIn.classList.toggle(elemClass);
+            $putIn.id = elemId;
+            $putIn.src = src;
+            $putIn.innerHTML = content;
+            $parent.appendChild($putIn);
+        }
+
+        
+    </script>
+</body>
+
+</html>
