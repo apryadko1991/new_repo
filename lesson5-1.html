@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>lesson5-1</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+
+        }
+        table {
+            font-family: Impact, sans-serif;
+            font-size: 30px;
+            color: black;
+        }
+
+        td {
+            height: 50px;
+            width: 50px;
+            text-align: center;
+        }
+
+        tr:nth-child(even) td:nth-child(odd) {
+            background-color: black;
+        }
+
+        tr:nth-child(odd) td:nth-child(even) {
+            background-color: black;
+        }
+
+        tr:last-child td:nth-child(odd),
+        tr:first-child td:nth-child(even) {
+            background-color: #fff;
+        }
+
+        tr:nth-child(even) td:first-child {
+            background-color: #fff;
+        }
+
+        tr:nth-child(odd) td:last-child {
+            background-color: #fff;
+        }
+
+    </style>
+</head>
+
+<body>
+
+    <div class="box">
+
+    </div>
+
+    <script>
+        function chessboard1() {
+            var newTable = document.createElement('table'),
+                lets = ['', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', ''];
+            for (var i = 0, a = 9; i < 10, a >= 0; i++, a--) {
+                var newTr = newTable.insertRow(i);
+                for (var j = 0; j < 10; j++) {
+                    var newTd = newTr.insertCell(j);
+                    switch (i) {
+                        case 0:
+                            newTd.innerText = lets[j];
+                            break;
+                        case 9:
+                            newTd.innerText = lets[j];
+                            break;
+                        default:
+                            if (j === 0 || j === 9) {
+                                newTd.innerHTML = a;
+                            }
+                            break;
+                    }
+                }
+            }
+            var elem = document.getElementsByClassName('task511');
+            document.body.appendChild(newTable);
+        };
+        chessboard1();
+
+    </script>
+</body>
+
+</html>

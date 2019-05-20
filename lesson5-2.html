@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>lesson5-2</title>
+    <style>
+       
+    </style>
+</head>
+
+<body>
+    <div id="cart"></div>
+
+    <script>
+        var $cart = document.getElementById('cart'),
+            cart = [{
+                name: 'Трусы',
+                title: 500,
+                quantity: 5,
+            },
+            {
+                name: 'Майка',
+                title: 300,
+                quantity: 3,
+            },
+            {
+                name: 'Носки',
+                title: 100,
+                quantity: 5,
+            },
+        ];
+
+        function countBasketPrice() {
+            var quantity = 0,
+                sum = 0;
+
+            for (var i = 0; i < cart.length; i++) {
+                var enumerator = 0;
+                var counter = cart[i].title * cart[i].quantity;
+                sum += counter;
+                quantity += cart[i].quantity + enumerator;
+            }
+
+            var $span = document.createElement('span');
+
+            if (cart.length === 0) {
+                $span.textContent = 'Корзина пуста';
+            } 
+            else {
+                $span.textContent = 'В корзине ' + quantity + ' товаров на сумму: ' + sum +  ' рублей';
+            }
+            $cart.appendChild($span);
+
+            return sum;
+        };
+
+        countBasketPrice();
+    </script>
+</body></html>
